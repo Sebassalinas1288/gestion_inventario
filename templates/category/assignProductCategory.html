@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignar Producto a Categoría</title>
+</head>
+<body>
+    <h1>Asignar Producto a Categoría</h1>
+    <form action="{{ url_for('assignProductCategory') }}" method="POST">
+        <label for="producto_id">Producto:</label>
+        <select name="producto_id" id="producto_id">
+            {% for producto in productos %}
+            <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="categoria_id">Categoría:</label>
+        <select name="categoria_id" id="categoria_id">
+            {% for categoria in categorias %}
+            <option value="{{ categoria.id }}">{{ categoria.nombre }}</option>
+            {% endfor %}
+        </select><br>
+        <button type="submit">Asignar</button>
+    </form>
+</body>
+</html>
