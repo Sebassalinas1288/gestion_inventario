@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Categorías</title>
+</head>
+<body>
+    <h1>Consultar Categorías</h1>
+    <a href="{{ url_for('addCategory') }}">Añadir Categoría</a>
+    <ul>
+        {% for categoria in categorias %}
+        <li>{{ categoria.nombre }} - {{ categoria.descripcion }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
