@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Disponibilidad</title>
+</head>
+<body>
+    <h1>Consultar Disponibilidad del Producto</h1>
+    
+    <form method="POST" action="{{ url_for('checkProductAvailability') }}">
+        <label for="producto_id">Seleccionar Producto:</label>
+        <select id="producto_id" name="producto_id">
+            {% for producto in productos %}
+                <option value="{{ producto.id }}">{{ producto.nombre }} - {{ producto.descripcion }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="bodega_id">Seleccionar Bodega:</label>
+        <select id="bodega_id" name="bodega_id">
+            {% for bodega in bodegas %}
+                <option value="{{ bodega.id }}">{{ bodega.nombre }} - {{ bodega.ubicacion }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Consultar</button>
+    </form>
+
+    <a href="{{ url_for('index') }}">Volver</a>
+</body>
+</html>

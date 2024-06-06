@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disponibilidad del Producto</title>
+</head>
+<body>
+    <h1>Disponibilidad del Producto</h1>
+    
+    <h2>Producto: {{ producto.nombre }}</h2>
+    <p>Descripción: {{ producto.descripcion }}</p>
+    <p>Precio: {{ producto.precio }}</p>
+    <p>Stock: {{ producto.stock }}</p>
+    <p>Categoría: {{ producto.categoria.nombre }}</p>
+
+    <h2>Bodega: {{ bodega.nombre }}</h2>
+    <p>Ubicación: {{ bodega.ubicacion }}</p>
+    <p>Capacidad Máxima: {{ bodega.capacidad_maxima }}</p>
+    
+    <h3>Cantidad en esta Bodega:</h3>
+    <p>{{ cantidad }}</p>
+    
+    <a href="{{ url_for('checkProductAvailability') }}">Consultar otro producto</a>
+</body>
+</html>

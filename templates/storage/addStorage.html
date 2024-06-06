@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Bodega</title>
+</head>
+<body>
+    <h1>Añadir Bodega</h1>
+    <form action="{{ url_for('addStorage') }}" method="POST">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+        <label for="ubicacion">Ubicación:</label>
+        <input type="text" id="ubicacion" name="ubicacion" required><br>
+        <label for="capacidad_maxima">Capacidad Máxima:</label>
+        <input type="number" id="capacidad_maxima" name="capacidad_maxima" required><br>
+        <button type="submit">Añadir Bodega</button>
+    </form>
+</body>
+</html>

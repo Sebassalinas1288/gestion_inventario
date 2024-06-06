@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Asignar Producto a Proveedor</title>
+    </head>
+    <body>
+        <h1>Asignar Producto a Proveedor</h1>
+        <form method="POST">
+            <label for="producto_id">Seleccionar Producto:</label>
+            <select name="producto_id" id="producto_id">
+                {% for producto in productos %}
+                    <option value="{{ producto.id }}">{{ producto.nombre }}</option>
+                {% endfor %}
+            </select><br>
+        
+            <label for="proveedor_id">Seleccionar Proveedor:</label>
+            <select name="proveedor_id" id="proveedor_id">
+                {% for proveedor in proveedores %}
+                    <option value="{{ proveedor.id }}">{{ proveedor.nombre }}</option>
+                {% endfor %}
+            </select><br>
+        
+            <input type="submit" value="Asignar Proveedor">
+        </form>
+        
+    </body>
+</html>

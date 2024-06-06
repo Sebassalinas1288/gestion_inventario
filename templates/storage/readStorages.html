@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Consultar Bodegas</title>
+    </head>
+    <body>
+        <h1>Consultar Bodegas</h1>
+        <a href="{{ url_for('addStorage') }}">Añadir Bodega</a>
+        <ul>
+            {% for bodega in bodegas %}
+            <li>
+                <a href="{{ url_for('consultarBodega', bodega_id=bodega.id) }}"
+                    >{{ bodega.nombre }}</a
+                >
+                - {{ bodega.ubicacion }} - Capacidad: {{ bodega.capacidad_maxima
+                }}
+            </li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>

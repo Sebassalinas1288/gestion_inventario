@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Añadir Producto a Bodega</title>
+    </head>
+    <body>
+        <h1>Añadir Producto a Bodega</h1>
+        <form method="POST">
+            <label for="bodega_id">Seleccionar Bodega:</label>
+            <select name="bodega_id" id="bodega_id">
+                {% for bodega in bodegas %}
+                <option value="{{ bodega.id }}">{{ bodega.nombre }}</option>
+                {% endfor %}</select
+            ><br />
+
+            <input type="submit" value="Agregar a Bodega" />
+        </form>
+    </body>
+</html>
