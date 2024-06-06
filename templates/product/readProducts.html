@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Productos</title>
+</head>
+<body>
+    <h1>Consultar Productos</h1>
+    <a href="{{ url_for('addProduct') }}">Añadir Producto</a>
+    <ul>
+        {% for product in products %}
+        <li>
+            <a href="{{ url_for('readProduct', product_id=product.id) }}">{{ product.name }}</a> - {{ product.description }} - ${{ product.price }} - 
+            Stock: {{ product.stock }} - 
+            Categoría: {{ product.category.name if product.category else 'Sin categoría' }} - 
+            Proveedor: {{ product.supplier.name }} -
+            Bodega: {{ product.storage.name if product.storage else 'N/A' }}
+            <a href="{{ url_for('addStock', product_id=product.id) }}">Agregar Stock</a>
+            <a href="{{ url_for('removeStock', product_id=product.id) }}">Retirar Stock</a>
+            <a href="{{ url_for('assignProductCategory', product_id=product.id) }}">Asignar a Categoría</a>
+            <form action="{{ url_for('removeProductCategory', product_id=product.id) }}" method="POST" style="display:inline;">
+                <button type="submit">Eliminar de Categoría</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('index') }}">Volver</a>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Consultar Categorías</title>
+    </head>
+    <body>
+        <h1>Consultar Categorías</h1>
+        <a href="{{ url_for('addCategory') }}">Añadir Categoría</a>
+        <ul>
+            {% for category in categories %}
+            <li>
+                <a
+                    href="{{ url_for('consultarCategoria', category_id=category.id) }}"
+                    >{{ category.name }}</a
+                >
+                - {{ category.description }}
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('index') }}">Volver</a>
+    </body>
+</html>

@@ -1,17 +1,20 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultar Categorías</title>
-</head>
-<body>
-    <h1>Consultar Categorías</h1>
-    <a href="{{ url_for('addCategory') }}">Añadir Categoría</a>
-    <ul>
-        {% for categoria in categorias %}
-        <li>{{ categoria.nombre }} - {{ categoria.descripcion }}</li>
-        {% endfor %}
-    </ul>
-</body>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Información de la Categoría</title>
+    </head>
+    <body>
+        <h1>Información de la Categoría</h1>
+        <p><strong>Nombre:</strong> {{ category.name }}</p>
+        <p><strong>Descripción:</strong> {{ category.description }}</p>
+        <h2>Productos asociados:</h2>
+        <ul>
+            {% for product in category.products %}
+            <li>{{ product.name }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('index') }}">Volver</a>
+    </body>
 </html>
