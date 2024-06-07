@@ -8,14 +8,23 @@
     <body>
         <h1>Añadir Producto a Bodega</h1>
         <form method="POST">
-            <label for="bodega_id">Seleccionar Bodega:</label>
-            <select name="bodega_id" id="bodega_id">
-                {% for bodega in bodegas %}
-                <option value="{{ bodega.id }}">{{ bodega.nombre }}</option>
+            <p>Producto Seleccionado: {{ product.name }}</p>
+
+            <label for="storage_id">Seleccionar Bodega:</label>
+            <select name="storage_id" id="storage_id">
+                {% for storage in storages %}
+                <option value="{{ storage.id }}">{{ storage.name }}</option>
                 {% endfor %}</select
             ><br />
+            {% if error %}
+            <label for="error" id="error" name="error">
+                No hay suficiente espacio en la bodega para almacenar el
+                producto.</label
+            >
+            {% endif %}
 
             <input type="submit" value="Agregar a Bodega" />
         </form>
+        <a href="{{ url_for('readProducts') }}">Volver</a>
     </body>
 </html>

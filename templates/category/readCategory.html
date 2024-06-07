@@ -13,7 +13,9 @@
         <ul>
             {% for product in category.products %}
             <li>{{ product.name }}</li>
-            {% endfor %}
+            {% endfor %} {% if not category.products %}
+            <li>No hay productos asociados</li>
+            {% endif %}
         </ul>
         <a href="{{ url_for('index') }}">Volver</a>
     </body>

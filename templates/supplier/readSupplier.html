@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Información del Proveedor</title>
-</head>
-<body>
-    <h1>Información del Proveedor</h1>
-    <p><strong>Nombre:</strong> {{ proveedor.nombre }}</p>
-    <p><strong>Dirección:</strong> {{ proveedor.direccion }}</p>
-    <p><strong>Teléfono:</strong> {{ proveedor.telefono }}</p>
-    <h2>Productos suministrados:</h2>
-    <ul>
-        {% for producto in proveedor.productos %}
-            <li>{{ producto.nombre }}</li>
-        {% endfor %}
-    </ul>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Información del Proveedor</title>
+    </head>
+    <body>
+        <h1>Información del Proveedor</h1>
+        <p><strong>Nombre:</strong> {{ supplier.name }}</p>
+        <p><strong>Dirección:</strong> {{ supplier.address }}</p>
+        <p><strong>Teléfono:</strong> {{ supplier.cellphone }}</p>
+        <h2>Productos suministrados:</h2>
+        <ul>
+            {% for product in supplier.products %}
+            <li>{{ product.name }}</li>
+            {% endfor %}{% if not supplier.products %}
+            <li>No hay productos asociados</li>
+            {% endif %}
+        </ul>
+        <a href="{{ url_for('readSuppliers') }}">Volver al menú</a>
+    </body>
 </html>

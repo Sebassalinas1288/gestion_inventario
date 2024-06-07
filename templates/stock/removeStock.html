@@ -1,16 +1,23 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retirar Stock</title>
-</head>
-<body>
-    <h1>Retirar Stock de {{ producto.nombre }}</h1>
-    <form action="{{ url_for('removeStock', producto_id=producto.id) }}" method="POST">
-        <label for="cantidad">Cantidad a retirar:</label>
-        <input type="number" id="cantidad" name="cantidad" required><br>
-        <button type="submit">Retirar Stock</button>
-    </form>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Retirar Stock</title>
+    </head>
+    <body>
+        <h1>Retirar Stock de {{ product.name }}</h1>
+        <form
+            action="{{ url_for('removeStock', product_id=product.id) }}"
+            method="POST"
+        >
+            <label for="amount">Cantidad a retirar:</label>
+            <input type="number" id="amount" name="amount" required /><br />
+            {% if error %}
+            <label for="error" id="error" name="error"> No se puede quitar mas stock del existente</label>
+            {% endif %}
+            <button type="submit">Retirar Stock</button>
+        </form>
+        <a href="{{ url_for('readProducts') }}">Volver a productos</a>
+    </body>
 </html>

@@ -1,12 +1,36 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valor Total del Stock</title>
-</head>
-<body>
-    <h1>Valor Total del Stock</h1>
-    <p>El valor total del stock es: ${{ valor_total }}</p>
-</body>
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Valor Total del Stock</title>
+    </head>
+    <body>
+        <h1>Valor Total del Stock</h1>
+
+        <h2>Valor Total del Stock: {{ total_stock_value }}</h2>
+        <h2>Total de Productos en Stock: {{ totalStock }}</h2>
+
+        <h3>Detalles del Stock por Producto</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Stock</th>
+                    <th>Valor del Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for name, stock, valor_stock in product_stock_details %}
+                <tr>
+                    <td>{{ name }}</td>
+                    <td>{{ stock }}</td>
+                    <td>{{ valor_stock }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('index') }}">Volver al menú principal</a>
+    </body>
 </html>

@@ -9,27 +9,30 @@
         <h1>Informe de Stock</h1>
 
         <h2>Stock Total</h2>
-        <p>Total de stock: {{ valor_total }}</p>
+        <p>Total de stock: {{ stock_total }}</p>
 
         <h2>Stock por Categoría</h2>
         <ul>
-            {% for categoria in categorias %}
-            <li>{{ categoria.nombre }}: {{ categoria_stock(categoria) }}</li>
+            {% for category in categories %}
+            <li>{{ category.name }}: {{ categoryStock(category) }}</li>
             {% endfor %}
         </ul>
 
         <h2>Stock por Proveedor</h2>
         <ul>
-            {% for proveedor in proveedores %}
-            <li>{{ proveedor.nombre }}: {{ proveedor_stock(proveedor) }}</li>
+            {% for supplier in suppliers %}
+            <li>{{ supplier.name }}: {{ supplierStock(supplier) }}</li>
             {% endfor %}
         </ul>
 
         <h2>Stock por Bodega</h2>
         <ul>
-            {% for bodega in bodegas %}
-            <li>{{ bodega.nombre }}: {{ bodega_stock(bodega) }}</li>
+            {% for storage in storages %}
+            <li>{{ storage.name }}: {{ storageStock(storage) }}</li>
             {% endfor %}
         </ul>
+        <a href="{{ url_for('index') }}"
+            >Regresar al menú</a
+        >
     </body>
 </html>

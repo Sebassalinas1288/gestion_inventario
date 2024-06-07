@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Información de la Bodega</title>
-</head>
-<body>
-    <h1>Información de la Bodega</h1>
-    <p><strong>Nombre:</strong> {{ bodega.nombre }}</p>
-    <p><strong>Ubicación:</strong> {{ bodega.ubicacion }}</p>
-    <p><strong>Capacidad Máxima:</strong> {{ bodega.capacidad_maxima }}</p>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Información de la Bodega</title>
+    </head>
+    <body>
+        <h1>Información de la Bodega</h1>
+        <p><strong>Nombre:</strong> {{ storage.name }}</p>
+        <p><strong>Ubicación:</strong> {{ storage.location }}</p>
+        <p><strong>Capacidad Máxima:</strong> {{ storage.max_capacity }}</p>
 
-    <h2>Productos almacenados:</h2>
-    <ul>
-        {% for producto in productos %}
-            <li>{{ producto.nombre }} - Cantidad almacenada: {{ producto.stock }}</li>
-        {% endfor %}
-    </ul>
+        <h2>Productos almacenados:</h2>
+        <ul>
+            {% for product in products %}
+            <li>
+                {{ product.name }} - Cantidad almacenada: {{ product.stock }}
+            </li>
+            {% endfor %}
+        </ul>
 
-    <p><strong>Total Stock en la Bodega:</strong> {{ total_stock }}</p>
-</body>
+        <p><strong>Total Stock en la Bodega:</strong> {{ totalStock }}</p>
+        <a href="{{ url_for('readStorages') }}">Volver a Productos</a>
+    </body>
 </html>

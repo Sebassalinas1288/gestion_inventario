@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultar Proveedores</title>
-</head>
-<body>
-    <h1>Consultar Proveedores</h1>
-    <a href="{{ url_for('addSupplier') }}">Añadir Proveedor</a>
-    <ul>
-        {% for proveedor in proveedores %}
-        <li>
-            <a href="{{ url_for('consultarProveedor', proveedor_id=proveedor.id) }}">{{ proveedor.nombre }}</a> - {{ proveedor.direccion }} - {{ proveedor.telefono }}
-        </li>
-        {% endfor %}
-    </ul>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Consultar Proveedores</title>
+    </head>
+    <body>
+        <h1>Consultar Proveedores</h1>
+        <a href="{{ url_for('addSupplier') }}">Añadir Proveedor</a>
+        <ul>
+            {% for supplier in suppliers %}
+            <li>
+                <a
+                    href="{{ url_for('consultarProveedor', supplier_id=supplier.id) }}"
+                    >{{ supplier.name }}</a
+                >
+                - {{ supplier.address }} - {{ supplier.cellphone }}
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('index') }}">Volver al menú</a>
+    </body>
 </html>

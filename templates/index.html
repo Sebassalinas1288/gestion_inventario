@@ -1,3 +1,4 @@
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -30,27 +31,6 @@
                 >
             </li>
             <li>
-                <a href="{{ url_for('assignProductSupplier') }}"
-                    >Asignar Producto a Proveedor</a
-                >
-            </li>
-            <li>
-                <a href="{{ url_for('removeProductSupplier', producto_id=1) }}"
-                    >Eliminar Producto de Proveedor</a
-                >
-            </li>
-            <li>
-                <a href="{{ url_for('addProductToStorage', producto_id=1) }}"
-                    >Agregar Producto a Bodega</a
-                >
-            </li>
-            <li>
-                <a
-                    href="{{ url_for('removeProductFromStorage', producto_id=1) }}"
-                    >Retirar Producto de Bodega</a
-                >
-            </li>
-            <li>
                 <a href="{{ url_for('checkProductAvailability') }}"
                     >Consultar Disponibilidad de Producto en Bodega</a
                 >
@@ -63,3 +43,4 @@
         </ul>
     </body>
 </html>
+{% endblock %}

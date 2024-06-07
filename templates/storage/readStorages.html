@@ -9,15 +9,16 @@
         <h1>Consultar Bodegas</h1>
         <a href="{{ url_for('addStorage') }}">Añadir Bodega</a>
         <ul>
-            {% for bodega in bodegas %}
+            {% for storage in storages %}
             <li>
-                <a href="{{ url_for('consultarBodega', bodega_id=bodega.id) }}"
-                    >{{ bodega.nombre }}</a
+                <a
+                    href="{{ url_for('readStorage', storage_id=storage.id) }}"
+                    >{{ storage.name }}</a
                 >
-                - {{ bodega.ubicacion }} - Capacidad: {{ bodega.capacidad_maxima
-                }}
+                - {{ storage.location }} - Capacidad: {{ storage.max_capacity }}
             </li>
             {% endfor %}
         </ul>
+        <a href="{{ url_for('index') }}">Volver al menú</a>
     </body>
 </html>
