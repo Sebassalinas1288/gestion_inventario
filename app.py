@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from models import db,  Product, Category, Supplier, Storage
 
 app = Flask(__name__)
@@ -9,7 +9,7 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect('/consultar-productos')
 
 ## -------- PRODUCT --------
 
@@ -54,19 +54,26 @@ def readProduct(product_id):
     product = Product.query.get_or_404(product_id)
     return render_template('product/readProduct.html', product=product)
 
-@app.route('/eliminar-producto/<int:product_id>', methods=['POST'])
-def removeProduct(product_id):
+@app.route('/eliminar-producto', methods=['POST'])
+def removeProduct():
+    data = request.get_json()
+    typeButton = data.get('type')
+    product_id = data.get('productId')
+
+    print("hola")
+
     product = Product.query.get_or_404(product_id)
-    if request.method == 'POST' and 'delete-category' in request.form:
+    if typeButton == 'delete-category':
         product.category_id = 1  # Asignar la categoría "Sin categoría"
-        db.session.commit()
-    elif request.method == 'POST' and 'delete-supplier' in request.form:
+    elif typeButton == 'delete-supplier':
         product.supplier_id = 1  # Asignar el proveedor "Sin proveedor"
-        db.session.commit()
-    elif request.method == 'POST' and 'delete-storage' in request.form:
+    elif typeButton == 'delete-storage':
         product.storage_id = 1  # Asignar a la bodega "Sin Bodega"
-        db.session.commit()
-    return redirect(url_for('readProducts'))
+    
+    db.session.commit()
+    
+    return jsonify({"success": True, "message": "Producto actualizado correctamente"})
+
 
 
 ## -------- CATEGORY --------
