@@ -1,5 +1,5 @@
 from app import app, db
-from models import Category
+from models import Category, Supplier, Storage
 
 def tableCreated():
     with app.app_context():
@@ -25,9 +25,29 @@ def createCategory():
             db.session.commit()
             print("Categoría 'Sin categoría' creada con éxito.")
 
+def createSupplier():
+    with app.app_context():
+        sin_proveedor = Supplier.query.filter_by(name='Sin proveedor').first()
+        if not sin_proveedor:
+            sin_proveedor = Supplier(name='Sin proveedor', address='', cellphone='')
+            db.session.add(sin_proveedor)
+            db.session.commit()
+            print("Proveedor 'Sin proveedor' creado con éxito.")
+
+def createStorage():
+    with app.app_context():
+        sin_bodega = Storage.query.filter_by(name='Sin bodega').first()
+        if not sin_bodega:
+            sin_bodega = Storage(name='Sin bodega', location='none', max_capacity='')
+            db.session.add(sin_bodega)
+            db.session.commit()
+            print("Bodega 'Sin bodega' creada con éxito.")
+
 if not tableCreated():
     createTables()
     createCategory()
+    createSupplier()
+    createStorage()
     print("Base de datos creada con éxito y categoría 'Sin categoría' agregada.")
 else:
     print("Las tablas ya están creadas en la base de datos.")

@@ -54,11 +54,18 @@ def readProduct(product_id):
     product = Product.query.get_or_404(product_id)
     return render_template('product/readProduct.html', product=product)
 
-@app.route('/eliminar-producto-categoria/<int:product_id>', methods=['POST'])
-def removeProductCategory(product_id):
-    producto = Product.query.get_or_404(product_id)
-    producto.category_id = 1  # Asignar la categoría "Sin categoría"
-    db.session.commit()
+@app.route('/eliminar-producto/<int:product_id>', methods=['POST'])
+def removeProduct(product_id):
+    product = Product.query.get_or_404(product_id)
+    if request.method == 'POST' and 'delete-category' in request.form:
+        product.category_id = 1  # Asignar la categoría "Sin categoría"
+        db.session.commit()
+    elif request.method == 'POST' and 'delete-supplier' in request.form:
+        product.supplier_id = 1  # Asignar el proveedor "Sin proveedor"
+        db.session.commit()
+    elif request.method == 'POST' and 'delete-storage' in request.form:
+        product.storage_id = 1  # Asignar a la bodega "Sin Bodega"
+        db.session.commit()
     return redirect(url_for('readProducts'))
 
 
@@ -84,7 +91,7 @@ def readCategories():
     return render_template('category/readCategories.html', categories=categories)
 
 @app.route('/consultar-categoria/<int:category_id>')
-def consultarCategoria(category_id):
+def readCategory(category_id):
     category = Category.query.get_or_404(category_id)
     return render_template('category/readCategory.html', category=category)
 
@@ -93,8 +100,7 @@ def assignProductCategory(product_id):
     product = Product.query.get_or_404(product_id)
     
     if request.method == 'POST':
-        category_id = request.form['category_id']
-        product.category_id = category_id
+        product.category_id = request.form['category_id']
         db.session.commit()
         return redirect(url_for('readProducts'))
 
@@ -102,18 +108,17 @@ def assignProductCategory(product_id):
     return render_template('category/assignProductCategory.html', product=product, categories=categories)
 
 
-
-## SUPPLIER
+## -------- SUPPLIER --------
 
 @app.route('/add-proveedor', methods=['GET', 'POST'])
 def addSupplier():
     if request.method == 'POST':
         name = request.form['name']
-        direccion = request.form['direccion']
-        telefono = request.form['telefono']
+        address = request.form['address']
+        cellphone = request.form['cellphone']
 
-        nuevo_proveedor = Supplier(name=name, direccion=direccion, telefono=telefono)
-        db.session.add(nuevo_proveedor)
+        newSupplier = Supplier(name=name, address=address, cellphone=cellphone)
+        db.session.add(newSupplier)
         db.session.commit()
 
         return redirect(url_for('index'))
@@ -122,13 +127,26 @@ def addSupplier():
 
 @app.route('/consultar-proveedores')
 def readSuppliers():
-    proveedores = Supplier.query.all()
-    return render_template('supplier/readSuppliers.html', proveedores=proveedores)
+    suppliers = Supplier.query.all()
+    return render_template('supplier/readSuppliers.html', suppliers=suppliers)
 
-@app.route('/consultar-proveedor/<int:proveedor_id>')
-def consultarProveedor(proveedor_id):
-    proveedor = Supplier.query.get_or_404(proveedor_id)
-    return render_template('supplier/readSupplier.html', proveedor=proveedor)
+@app.route('/consultar-proveedor/<int:supplier_id>', methods=['GET', 'POST'])
+def consultarProveedor(supplier_id):
+    supplier = Supplier.query.get_or_404(supplier_id)
+    return render_template('supplier/readSupplier.html', supplier=supplier)
+
+# Relación entre Product y Supplier
+@app.route('/asignar-producto-proveedor/<int:product_id>', methods=['GET', 'POST'])
+def assignProductSupplier(product_id):
+    product = Product.query.get_or_404(product_id)
+
+    if request.method == 'POST':
+        product.supplier_id = request.form['supplier_id']
+        db.session.commit()
+        return redirect(url_for('readProducts'))
+    
+    suppliers = Supplier.query.all()
+    return render_template('supplier/assignProductSupplier.html', product=product, suppliers=suppliers)
 
 
 ## -------- STORAGE ---------
@@ -136,173 +154,140 @@ def consultarProveedor(proveedor_id):
 def addStorage():
     if request.method == 'POST':
         name = request.form['name']
-        ubicacion = request.form['ubicacion']
-        capacidad_maxima = request.form['capacidad_maxima']
+        location = request.form['location']
+        max_capacity = request.form['max_capacity']
 
-        nueva_bodega = Storage(name=name, ubicacion=ubicacion, capacidad_maxima=int(capacidad_maxima))
-        db.session.add(nueva_bodega)
+        newStorage = Storage(name=name, location=location, max_capacity=int(max_capacity))
+        db.session.add(newStorage)
         db.session.commit()
 
-        return redirect(url_for('index'))
+        return redirect(url_for('readStorages'))
 
     return render_template('storage/addStorage.html')
 
 @app.route('/consultar-bodegas')
 def readStorages():
-    bodegas = Storage.query.all()
-    return render_template('storage/readStorages.html', bodegas=bodegas)
+    storages = Storage.query.all()
+    return render_template('storage/readStorages.html', storages=storages)
 
-@app.route('/consultar-bodega/<int:bodega_id>')
-def consultarBodega(bodega_id):
-    bodega = Storage.query.get_or_404(bodega_id)
-    productos = bodega.productos
-    total_stock = sum(producto.stock for producto in productos)
-    return render_template('storage/readStorage.html', bodega=bodega, productos=productos, total_stock=total_stock)
+@app.route('/consultar-bodega/<int:storage_id>')
+def readStorage(storage_id):
+    storage = Storage.query.get_or_404(storage_id)
+    products = storage.products
+    totalStock = sum(products.stock for products in products)
+    return render_template('storage/readStorage.html', storage=storage, products=products, totalStock=totalStock)
 
-## STOCK
+@app.route('/agregar-producto-bodega/<int:product_id>', methods=['GET', 'POST'])
+def addProductToStorage(product_id):
+    product = Product.query.get_or_404(product_id)
+    storages = Storage.query.all()
 
-@app.route('/add-stock/<int:product_id>', methods=['GET', 'POST'])
-def addStock(product_id):
-    producto = Product.query.get_or_404(product_id)
     if request.method == 'POST':
-        cantidad = int(request.form['cantidad'])
-        producto.stock += cantidad
-        db.session.commit()
-        return redirect(url_for('readProducts'))
-
-    return render_template('stock/addStock.html', producto=producto)
-
-@app.route('/remove-stock/<int:product_id>', methods=['GET', 'POST'])
-def removeStock(product_id):
-    producto = Product.query.get_or_404(product_id)
-    if request.method == 'POST':
-        cantidad = int(request.form['cantidad'])
-        if cantidad <= producto.stock:
-            producto.stock -= cantidad
-            db.session.commit()
-        else:
-            # Manejar el caso donde se intenta retirar más stock del disponible
-            return "Error: No se puede retirar más stock del disponible."
-        return redirect(url_for('readProducts'))
-
-    return render_template('stock/removeStock.html', producto=producto)
-
-@app.route('/calcular-valor-total-stock')
-def calculateStockValue():
-    productos = Product.query.all()
-    valor_total = sum(producto.precio * producto.stock for producto in productos)
-    return render_template('stock/calculateStockValue.html', valor_total=valor_total)
-
-@app.route('/informe-stock')
-def informeStock():
-    productos = Product.query.all()
-    categorias = Category.query.all()
-    proveedores = Supplier.query.all()
-    bodegas = Storage.query.all()
-    
-    # Función para calcular el stock total por categoría
-    def categoria_stock(categoria):
-        return sum(producto.stock for producto in productos if producto.categoria_id == categoria.id)
-
-    # Función para calcular el stock total por proveedor
-    def proveedor_stock(proveedor):
-        return sum(producto.stock for producto in productos if producto.proveedor_id == proveedor.id)
-
-    # Función para calcular el stock total por bodega
-    def bodega_stock(bodega):
-        return sum(producto.stock for producto in productos if producto.bodega_id == bodega.id)
-
-    stock_total = sum(producto.stock for producto in productos)
-
-    return render_template(
-        'stock/reportStock.html',
-        valor_total=stock_total,
-        categorias=categorias,
-        proveedores=proveedores,
-        bodegas=bodegas,
-        categoria_stock=categoria_stock,
-        proveedor_stock=proveedor_stock,
-        bodega_stock=bodega_stock
-    )
-
-
-
-
-
-
-
-# Relación entre Product y Supplier
-@app.route('/asignar-producto-proveedor', methods=['GET', 'POST'])
-def assignProductSupplier():
-    if request.method == 'POST':
-        producto_id = request.form['producto_id']
-        proveedor_id = request.form['proveedor_id']
-        producto = Product.query.get(producto_id)
-        producto.proveedor_id = proveedor_id
-        db.session.commit()
-        return redirect(url_for('readProducts'))
-
-    productos = Product.query.all()
-    proveedores = Supplier.query.all()
-    return render_template('supplier/assignProductSupplier.html', productos=productos, proveedores=proveedores)
-
-@app.route('/eliminar-producto-proveedor/<int:producto_id>', methods=['POST'])
-def removeProductSupplier(producto_id):
-    producto = Product.query.get_or_404(producto_id)
-    producto.proveedor_id = None
-    db.session.commit()
-    return redirect(url_for('readProducts'))
-
-# Relación entre Product y Storage
-@app.route('/agregar-producto-bodega/<int:producto_id>', methods=['GET', 'POST'])
-def addProductToStorage(producto_id):
-    producto = Product.query.get_or_404(producto_id)
-    if request.method == 'POST':
-        bodega_id = request.form['bodega_id']
-        bodega = Storage.query.get(bodega_id)
-        if producto.stock <= bodega.capacidad_maxima:
-            producto.bodega_id = bodega_id
-            bodega.productos.append(producto)
+        storage_id = request.form['storage_id']
+        storage = Storage.query.get(storage_id)
+        if product.stock <= storage.max_capacity:
+            product.storage_id = storage_id
+            storage.products.append(product)
             db.session.commit()
             return redirect(url_for('readProducts'))
         else:
-            return "Error: No hay suficiente espacio en la bodega para almacenar el producto."
-
-    bodegas = Storage.query.all()
-    return render_template('storage/addProductToStorage.html', producto=producto, bodegas=bodegas)
-
-@app.route('/remover-producto-bodega/<int:producto_id>', methods=['GET', 'POST'])
-def removeProductFromStorage(producto_id):
-    producto = Product.query.get_or_404(producto_id)
-    if request.method == 'POST':
-        producto.bodega_id = None
-        db.session.commit()
-        return redirect(url_for('readProducts'))
-
-    return render_template('storage/removeProductFromStorage.html', producto=producto)
+            error= True
+            return render_template('storage/addProductToStorage.html', product=product, storages=storages, error= error)
+        
+    return render_template('storage/addProductToStorage.html', product=product, storages=storages)
 
 @app.route('/consultar-disponibilidad', methods=['GET', 'POST'])
 def checkProductAvailability():
     if request.method == 'POST':
-        producto_id = request.form['producto_id']
-        bodega_id = request.form['bodega_id']
-        producto = Product.query.get_or_404(producto_id)
-        bodega = Storage.query.get_or_404(bodega_id)
+        product_id = request.form['product_id']
+        storage_id = request.form['storage_id']
+        product = Product.query.get_or_404(product_id)
+        storage = Storage.query.get_or_404(storage_id)
         
         # Obtener la cantidad del producto en la bodega específica
-        cantidad = None
-        for prod in bodega.productos:
-            if prod.id == producto.id:
-                cantidad = prod.stock
+        amount = None
+        for prod in storage.products:
+            if prod.id == product.id:
+                amount = prod.stock
                 break
                 
-        return render_template('storage/checkProductAvailability.html', producto=producto, bodega=bodega, cantidad=cantidad)
+        return render_template('storage/checkProductAvailability.html', product=product, storage=storage, amount=amount)
 
-    productos = Product.query.all()
-    bodegas = Storage.query.all()
-    return render_template('storage/checkAvailabilityForm.html', productos=productos, bodegas=bodegas)
+    products = Product.query.all()
+    storages = Storage.query.all()
+    return render_template('storage/checkAvailabilityForm.html', products=products, storages=storages)
+
+## -------- STOCK --------
+
+@app.route('/add-stock/<int:product_id>', methods=['GET', 'POST'])
+def addStock(product_id):
+    product = Product.query.get_or_404(product_id)
+    if request.method == 'POST':
+        amount = int(request.form['amount'])
+        product.stock += amount
+        db.session.commit()
+        return redirect(url_for('readProducts'))
+
+    return render_template('stock/addStock.html', product=product)
+
+@app.route('/remove-stock/<int:product_id>', methods=['GET', 'POST'])
+def removeStock(product_id):
+    product = Product.query.get_or_404(product_id)
+    if request.method == 'POST':
+        amount = int(request.form['amount'])
+        if amount <= product.stock:
+            product.stock -= amount
+            db.session.commit()
+            return redirect(url_for('readProducts'))
+        else:
+            error= True
+            return render_template('stock/removeStock.html', product=product, error= error)
+
+    return render_template('stock/removeStock.html', product=product)
+
+@app.route('/calcular-valor-total-stock')
+def calculateStockValue():
+    products = Product.query.all()
+    
+    total_stock_value = sum(product.price * product.stock for product in products)
+    totalStock = sum(product.stock for product in products)
+    
+    product_stock_details = [(product.name, product.stock, product.price * product.stock) for product in products]
+    
+    return render_template('stock/calculateStockValue.html', total_stock_value=total_stock_value, totalStock=totalStock, product_stock_details=product_stock_details)
 
 
+@app.route('/informe-stock')
+def informeStock():
+    products = Product.query.all()
+    categories = Category.query.all()
+    suppliers = Supplier.query.all()
+    storages = Storage.query.all()
+    
+    # Función para calcular el stock total por categoría
+    def categoryStock(category):
+        return sum(product.stock for product in products if product.category_id == category.id)
+
+    # Función para calcular el stock total por proveedor
+    def supplierStock(supplier):
+        return sum(product.stock for product in products if product.supplier_id == supplier.id)
+
+    # Función para calcular el stock total por bodega
+    def storageStock(storage):
+        return sum(product.stock for product in products if product.storage_id == storage.id)
+
+    stock_total = sum(product.stock for product in products)
+
+    return render_template(
+        'stock/reportStock.html',
+        stock_total=stock_total,
+        categories=categories,
+        suppliers=suppliers,
+        storages=storages,
+        categoryStock=categoryStock,
+        supplierStock=supplierStock,
+        storageStock=storageStock
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
