@@ -54,7 +54,7 @@ body.container {
 table {
     width: max-content;
     overflow: auto;
-    background: rgb(229 229 229);
+    background: rgb(212 212 212);
 }
 
 th {
@@ -67,6 +67,7 @@ th {
 }
 
 td {
+    background: rgb(229 229 229);
     padding-left: 8px;
     padding-right: 8px;
     text-align: center;

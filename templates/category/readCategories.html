@@ -1,4 +1,4 @@
-
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -6,20 +6,36 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Consultar Categorías</title>
     </head>
-    <body>
-        <h1>Consultar Categorías</h1>
-        <a href="{{ url_for('addCategory') }}">Añadir Categoría</a>
-        <ul>
-            {% for category in categories %}
-            <li>
-                <a
-                    href="{{ url_for('readCategory', category_id=category.id) }}"
-                    >{{ category.name }}</a
-                >
-                - {{ category.description }}
-            </li>
-            {% endfor %}
-        </ul>
-        <a href="{{ url_for('index') }}">Volver</a>
+    <body style="display: flex; flex-direction: column; gap: 24px">
+        <div style="display: flex; flex-direction: column">
+            <h1>Consultar Categorías</h1>
+            <button class="addButton">
+                <a href="{{ url_for('addCategory') }}">Añadir Categoría</a>
+            </button>
+        </div>
+        <div style="overflow: auto; height: 75vh">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                    <tr>
+                        <td>
+                            <a
+                                href="{{ url_for('readCategory', category_id=category.id) }}"
+                                >{{ category.name }}</a
+                            >
+                        </td>
+                        <td>{{ category.description }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
+{% endblock %}
