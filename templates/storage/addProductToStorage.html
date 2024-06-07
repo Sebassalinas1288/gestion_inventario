@@ -1,5 +1,6 @@
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,21 +11,30 @@
         <form method="POST">
             <p>Producto Seleccionado: {{ product.name }}</p>
 
-            <label for="storage_id">Seleccionar Bodega:</label>
-            <select name="storage_id" id="storage_id">
-                {% for storage in storages %}
-                <option value="{{ storage.id }}">{{ storage.name }}</option>
-                {% endfor %}</select
-            ><br />
+            <div>
+                <label for="storage_id">Seleccionar Bodega:</label>
+                <select name="storage_id" id="storage_id">
+                    {% for storage in storages %}
+                    <option value="{{ storage.id }}">{{ storage.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
             {% if error %}
-            <label for="error" id="error" name="error">
+            <label for="error" id="error" name="error" style="width: 350px">
                 No hay suficiente espacio en la bodega para almacenar el
                 producto.</label
             >
             {% endif %}
 
-            <input type="submit" value="Agregar a Bodega" />
+            <button type="submit" class="addButton">Asignar Bodega</button>
         </form>
-        <a href="{{ url_for('readProducts') }}">Volver</a>
+        <div style="padding-top: 12px">
+            <button class="return">
+                <a href="{{ url_for('readProducts') }}"
+                    >Consultar otro producto</a
+                >
+            </button>
+        </div>
     </body>
 </html>
+{% endblock %}

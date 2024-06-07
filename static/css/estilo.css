@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@1,200..1000&display=swap");
+
+html {
+    font-family: "Mulish";
+}
+
 :root {
     background: rgb(245 245 245);
 }
@@ -35,6 +41,171 @@ object.icon {
     height: 24px;
 }
 
+img.icon {
+    width: 24px;
+    height: 24px;
+}
+
 body.container {
-    margin-left: 260px;
+    margin-left: 280px;
+    padding-right: 32px;
+}
+
+table {
+    width: max-content;
+    overflow: auto;
+    background: rgb(229 229 229);
+}
+
+th {
+    background: rgb(212 212 212);
+    padding-left: 10px;
+    padding-right: 10px;
+    min-width: 100px;
+    font-size: 18px;
+    line-height: 28px;
+}
+
+td {
+    padding-left: 8px;
+    padding-right: 8px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 28px;
+}
+
+td a {
+    color: rgb(38 38 38);
+}
+
+td label.option-td {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+td label.option-td a {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+td label.option-td button {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+button.addButton {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 10px;
+    background: rgb(153 27 27);
+    color: rgb(250 250 250);
+}
+
+button.addButton:hover {
+    background: rgb(220 38 38);
+    color: rgb(250 250 250);
+}
+
+button a {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    text-decoration: none;
+    color: inherit;
+}
+
+div.container {
+    gap: 6px;
+}
+
+strong {
+    font-size: 20px;
+    line-height: 28px;
+}
+
+div.container p {
+    font-size: 18px;
+    line-height: 28px;
+}
+
+button.return {
+    display: flex;
+    width: fit-content;
+    border-radius: 10px;
+    background: rgb(255, 195, 0);
+    color: rgb(38 38 38);
+    cursor: pointer;
+}
+
+button.return:hover {
+    background: rgb(255, 224, 123);
+    color: rgb(38 38 38);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    padding: 24px;
+    background: rgb(229 229 229);
+    border-radius: 8px;
+    gap: 16px;
+}
+
+form p {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+    padding: 0px;
+    margin: 0px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+form label {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+}
+
+form input {
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    outline: none;
+}
+
+form select {
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+form button.addButton {
+    width: 100%;
+    justify-content: center;
+    padding: 8px;
+    cursor: pointer;
 }

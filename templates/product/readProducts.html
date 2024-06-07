@@ -1,79 +1,224 @@
 {% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Consultar Productos</title>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                document
+                    .querySelectorAll(".send-data-button")
+                    .forEach((button) => {
+                        button.addEventListener("click", function () {
+                            fetch("/eliminar-producto", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    productId: button.value,
+                                    type: button.id,
+                                }),
+                            })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    if (data.success) {
+                                        alert(data.message);
+                                        // Recargar la página para reflejar los cambios
+                                        location.reload();
+                                    } else {
+                                        alert(
+                                            data.message ||
+                                                "Error al procesar la solicitud"
+                                        );
+                                    }
+                                })
+                                .catch((error) => {
+                                    console.error("Error:", error);
+                                    alert("Error al enviar los datos");
+                                });
+                        });
+                    });
+            });
+        </script>
     </head>
-    <body>
-        <h1>Consultar Productos</h1>
-        <a href="{{ url_for('addProduct') }}">Añadir Producto</a>
-        <ul>
-            {% for product in products %}
-            <li>
-                <a href="{{ url_for('readProduct', product_id=product.id) }}"
-                    >{{ product.name }}</a
-                >
-                - {{ product.description }} - ${{ product.price }} - Stock: {{
-                product.stock }} - Categoría: {{ product.category.name if
-                product.category else 'Sin categoría' }} - Proveedor: {{
-                product.supplier.name }} - Bodega: {{ product.storage.name if
-                product.storage else 'N/A' }}
-                <a href="{{ url_for('addStock', product_id=product.id) }}"
-                    >Agregar Stock</a
-                >
-                <a href="{{ url_for('removeStock', product_id=product.id) }}"
-                    >Retirar Stock</a
-                >
-                <a
-                    href="{{ url_for('assignProductCategory', product_id=product.id) }}"
-                    >Asignar a Categoría</a
-                >
-                <form
-                    action="{{ url_for('removeProduct', product_id=product.id) }}"
-                    method="POST"
-                    style="display: inline"
-                >
-                    <button
-                        type="submit"
-                        id="delete-category"
-                        name="delete-category"
-                        onclick="return confirm('¿Seguro que quieres eliminar esta categoría?');"
-                    >
-                        Eliminar la Categoría
-                    </button>
+    <body style="display: flex; flex-direction: column; gap: 24px">
+        <div style="display: flex; flex-direction: column;">
+            <h1>Consultar Productos</h1>
+            <button class="addButton">
+                <a href="{{ url_for('addProduct') }}">Añadir Producto</a>
+            </button>
+        </div>
+        <div style="overflow: auto; height: 75vh">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Categoría</th>
+                        <th>Proveedoredor</th>
+                        <th>Bodega</th>
+                        <th>Stock</th>
+                        <th>Categoría</th>
+                        <th>Proveedoredor</th>
+                        <th>Bodega</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>
+                            <a
+                                href="{{ url_for('readProduct', product_id=product.id) }}"
+                                title="Ver Detalles"
+                            >
+                                {{ product.name }}
+                            </a>
+                        </td>
+                        <td>{{ product.description }}</td>
+                        <td>${{ product.price }}</td>
+                        <td>{{ product.stock }}</td>
+                        <td>
+                            {{ product.category.name if product.category else
+                            'Sin categoría' }}
+                        </td>
+                        <td>{{ product.supplier.name }}</td>
+                        <td>
+                            {{ product.storage.name if product.storage else
+                            'N/A' }}
+                        </td>
 
-                    <a
-                        href="{{ url_for('assignProductSupplier', product_id=product.id) }}"
-                        >Asignar un Proveedor</a
-                    >
-                    <button
-                        type="submit"
-                        id="delete-supplier"
-                        name="delete-supplier"
-                        onclick="return confirm('¿Seguro que quieres eliminar este proveedor?');"
-                    >
-                        Eliminar el Proveedor
-                    </button>
+                        <td>
+                            <label class="option-td">
+                                <a
+                                    href="{{ url_for('addStock', product_id=product.id) }}"
+                                    title="Agregar Stock"
+                                    style="padding: 1px"
+                                >
+                                    <img
+                                        src="{{ url_for('static', filename='icons/plus.svg') }}"
+                                        alt="Plus svg"
+                                        width="24"
+                                    />
+                                </a>
+                                <a
+                                    href="{{ url_for('removeStock', product_id=product.id) }}"
+                                    title="Retirar Stock"
+                                    style="
+                                        display: flex;
+                                        height: fit-content;
+                                        width: fit-content;
+                                    "
+                                >
+                                    <img
+                                        src="{{ url_for('static', filename='icons/minus.svg') }}"
+                                        alt="Minus svg"
+                                        width="24"
+                                    />
+                                </a>
+                            </label>
+                        </td>
 
-                    <a
-                        href="{{ url_for('addProductToStorage', product_id=product.id) }}"
-                        >Asignar una Bodega</a
-                    >
-                    <button
-                        type="submit"
-                        id="delete-storage"
-                        name="delete-storage"
-                        onclick="return confirm('¿Seguro que quieres eliminar de esta Bodega?');"
-                    >
-                        Eliminar de la Bodega
-                    </button>
-                </form>
-            </li>
-            {% endfor %}
-        </ul>
-        <a href="{{ url_for('index') }}">Volver</a>
+                        <td>
+                            <label class="option-td">
+                                <a
+                                    href="{{ url_for('assignProductCategory', product_id=product.id) }}"
+                                    title="Asignar Categoría"
+                                >
+                                    <img
+                                        src="{{ url_for('static', filename='icons/plus.svg') }}"
+                                        alt="Plus svg"
+                                        width="24"
+                                        height="24"
+                                    />
+                                </a>
+                                <button
+                                    id="delete-category"
+                                    name="delete-category"
+                                    title="Retirar Categoría"
+                                    class="send-data-button"
+                                    value="{{product.id}}"
+                                    onclick="return confirm('¿Seguro que quieres eliminar esta categoría?');"
+                                >
+                                    <img
+                                        src="{{ url_for('static', filename='icons/minus.svg') }}"
+                                        alt="Minus svg"
+                                        width="24"
+                                        height="24"
+                                    />
+                                </button>
+                            </label>
+                        </td>
+
+                        <td>
+                            <label class="option-td">
+                                <a
+                                    href="{{ url_for('assignProductSupplier', product_id=product.id) }}"
+                                    title="Asignar Proveedor"
+                                >
+                                    <img
+                                        src="{{ url_for('static', filename='icons/plus.svg') }}"
+                                        alt="Plus svg"
+                                        width="24"
+                                        height="24"
+                                    />
+                                </a>
+                                <button
+                                    id="delete-supplier"
+                                    name="delete-supplier"
+                                    title="Retirar Proveedor"
+                                    class="send-data-button"
+                                    value="{{product.id}}"
+                                    onclick="return confirm('¿Seguro que quieres eliminar este proveedor?');"
+                                >
+                                    <img
+                                        src="{{ url_for('static', filename='icons/minus.svg') }}"
+                                        alt="Minus svg"
+                                        width="24"
+                                        height="24"
+                                    />
+                                </button>
+                            </label>
+                        </td>
+
+                        <td>
+                            <label class="option-td">
+                                <a
+                                    href="{{ url_for('addProductToStorage', product_id=product.id) }}"
+                                    title="Asignar Bodega"
+                                >
+                                    <img
+                                        src="{{ url_for('static', filename='icons/plus.svg') }}"
+                                        alt="Plus svg"
+                                        width="24"
+                                        height="24"
+                                    />
+                                </a>
+                                <button
+                                    id="delete-storage"
+                                    name="delete-storage"
+                                    title="Retirar Bodega"
+                                    class="send-data-button"
+                                    value="{{product.id}}"
+                                    onclick="return confirm('¿Seguro que quieres eliminar esta Bodega?');"
+                                >
+                                    <img
+                                        src="{{ url_for('static', filename='icons/minus.svg') }}"
+                                        alt="Minus svg"
+                                        width="24"
+                                        height="24"
+                                    />
+                                </button>
+                            </label>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
 {% endblock %}

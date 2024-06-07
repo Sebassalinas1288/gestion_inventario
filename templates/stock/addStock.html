@@ -1,5 +1,6 @@
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,10 +12,19 @@
             action="{{ url_for('addStock', product_id=product.id) }}"
             method="POST"
         >
-            <label for="amount">Cantidad a agregar:</label>
-            <input type="number" id="amount" name="amount" required /><br />
-            <button type="submit">Agregar Stock</button>
+            <div>
+                <label for="amount">Cantidad a agregar:</label>
+                <input type="number" id="amount" name="amount" required />
+            </div>
+            <button type="submit" class="addButton">Agregar Stock</button>
         </form>
-        <a href="{{ url_for('readProducts') }}">Volver a productos</a>
+        <div style="padding-top: 12px">
+            <button class="return">
+                <a href="{{ url_for('readProducts') }}"
+                    >Consultar otro producto</a
+                >
+            </button>
+        </div>
     </body>
 </html>
+{% endblock %}

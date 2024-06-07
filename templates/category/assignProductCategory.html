@@ -1,3 +1,4 @@
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -9,16 +10,26 @@
         <h1>Asignar Producto a Categoría</h1>
         <form method="POST">
             <p>Producto Seleccionado: {{ product.name }}</p>
+            <div>
+                <label for="category_id">Seleccionar Categoría:</label>
+                <select name="category_id" id="category_id">
+                    {% for category in categories %}
+                    <option value="{{ category.id }}">
+                        {{ category.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
 
-            <label for="category_id">Seleccionar Categoría:</label>
-            <select name="category_id" id="category_id">
-                {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
-                {% endfor %}</select
-            ><br />
-
-            <input type="submit" value="Asignar Categoría" />
+            <button type="submit" class="addButton">Asignar Categoría</button>
         </form>
-        <a href="{{ url_for('readProducts') }}">Volver a Productos</a>
+        <div style="padding-top: 12px">
+            <button class="return">
+                <a href="{{ url_for('readProducts') }}"
+                    >Consultar otro producto</a
+                >
+            </button>
+        </div>
     </body>
 </html>
+{% endblock %}

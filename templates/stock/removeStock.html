@@ -1,5 +1,6 @@
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,13 +12,25 @@
             action="{{ url_for('removeStock', product_id=product.id) }}"
             method="POST"
         >
-            <label for="amount">Cantidad a retirar:</label>
-            <input type="number" id="amount" name="amount" required /><br />
+            <div>
+                <label for="amount">Cantidad a retirar:</label>
+                <input type="number" id="amount" name="amount" required />
+            </div>
             {% if error %}
-            <label for="error" id="error" name="error"> No se puede quitar mas stock del existente</label>
+            <label for="error" id="error" name="error" style="width: 250px">
+                No se puede quitar mas stock del existente</label
+            >
             {% endif %}
-            <button type="submit">Retirar Stock</button>
+            <button type="submit" class="addButton">Retirar Stock</button>
         </form>
-        <a href="{{ url_for('readProducts') }}">Volver a productos</a>
+
+        <div style="padding-top: 12px">
+            <button class="return">
+                <a href="{{ url_for('readProducts') }}"
+                    >Consultar otro producto</a
+                >
+            </button>
+        </div>
     </body>
 </html>
+{% endblock %}
