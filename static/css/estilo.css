@@ -1,0 +1,40 @@
+:root {
+    background: rgb(245 245 245);
+}
+
+div.layout {
+    background: rgb(229 229 229);
+    color: rgb(38 38 38);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+}
+
+div.layoutOptions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+a.layoutOption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: inherit;
+}
+
+object.icon {
+    width: 24px;
+    height: 24px;
+}
+
+body.container {
+    margin-left: 260px;
+}
