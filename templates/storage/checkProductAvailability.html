@@ -1,26 +1,34 @@
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disponibilidad del Producto</title>
-</head>
-<body>
-    <h1>Disponibilidad del Producto</h1>
-    
-    <h2>Producto: {{ product.name }}</h2>
-    <p>Descripción: {{ product.description }}</p>
-    <p>Precio: {{ product.price }}</p>
-    <p>Stock: {{ product.stock }}</p>
-    <p>Categoría: {{ product.category.name }}</p>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Disponibilidad del Producto</title>
+    </head>
+    <body>
+        <h1>Disponibilidad del Producto</h1>
 
-    <h2>Bodega: {{ storage.name }}</h2>
-    <p>Ubicación: {{ storage.location }}</p>
-    <p>Capacidad Máxima: {{ storage.max_capacity }}</p>
-    
-    <h3>Cantidad en esta Bodega:</h3>
-    <p>{{ amount }}</p>
-    
-    <a href="{{ url_for('checkProductAvailability') }}">Consultar otro producto</a>
-</body>
+        <div class="container">
+            <h2>Producto: {{ product.name }}</h2>
+            <p>Descripción: {{ product.description }}</p>
+            <p>Precio: {{ product.price }}</p>
+            <p>Stock: {{ product.stock }}</p>
+            <p>Categoría: {{ product.category.name }}</p>
+
+            <h2>Bodega: {{ storage.name }}</h2>
+            <p>Ubicación: {{ storage.location }}</p>
+            <p>Capacidad Máxima: {{ storage.max_capacity }}</p>
+
+            <h3>Cantidad en esta Bodega:</h3>
+            <p>{{ amount }}</p>
+        </div>
+
+        <button class="return">
+            <a href="{{ url_for('checkProductAvailability') }}"
+                >Consultar otro producto</a
+            >
+        </button>
+    </body>
 </html>
+{% endblock %}

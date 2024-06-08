@@ -1,3 +1,4 @@
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -7,17 +8,24 @@
     </head>
     <body>
         <h1>Información del Proveedor</h1>
-        <p><strong>Nombre:</strong> {{ supplier.name }}</p>
-        <p><strong>Dirección:</strong> {{ supplier.address }}</p>
-        <p><strong>Teléfono:</strong> {{ supplier.cellphone }}</p>
-        <h2>Productos suministrados:</h2>
-        <ul>
-            {% for product in supplier.products %}
-            <li>{{ product.name }}</li>
-            {% endfor %}{% if not supplier.products %}
-            <li>No hay productos asociados</li>
-            {% endif %}
-        </ul>
-        <a href="{{ url_for('readSuppliers') }}">Volver al menú</a>
+        <div class="container">
+            <p><strong>Nombre:</strong> {{ supplier.name }}</p>
+            <p><strong>Dirección:</strong> {{ supplier.address }}</p>
+            <p><strong>Teléfono:</strong> {{ supplier.cellphone }}</p>
+            <h2>Productos suministrados:</h2>
+            <ul>
+                {% for product in supplier.products %}
+                <li>{{ product.name }}</li>
+                {% endfor %}{% if not supplier.products %}
+                <li>No hay productos asociados</li>
+                {% endif %}
+            </ul>
+        </div>
+        <button class="return">
+            <a href="{{ url_for('readSuppliers') }}"
+                >Consultar otro proveedor</a
+            >
+        </button>
     </body>
 </html>
+{% endblock %}

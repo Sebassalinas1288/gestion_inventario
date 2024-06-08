@@ -1,3 +1,4 @@
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -8,7 +9,7 @@
     <body>
         <h1>Valor Total del Stock</h1>
 
-        <h2>Valor Total del Stock: {{ total_stock_value }}</h2>
+        <h2>Valor: ${{ total_stock_value }}</h2>
         <h2>Total de Productos en Stock: {{ totalStock }}</h2>
 
         <h3>Detalles del Stock por Producto</h3>
@@ -30,7 +31,6 @@
                 {% endfor %}
             </tbody>
         </table>
-
-        <a href="{{ url_for('index') }}">Volver al menú principal</a>
     </body>
 </html>
+{% endblock %}

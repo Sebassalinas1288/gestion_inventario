@@ -1,3 +1,4 @@
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -5,22 +6,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Información de la Bodega</title>
     </head>
-    <body>
+    <body style="display: flex; flex-direction: column; gap: 12px">
         <h1>Información de la Bodega</h1>
-        <p><strong>Nombre:</strong> {{ storage.name }}</p>
-        <p><strong>Ubicación:</strong> {{ storage.location }}</p>
-        <p><strong>Capacidad Máxima:</strong> {{ storage.max_capacity }}</p>
+        <div class="container">
+            <p><strong>Nombre:</strong> {{ storage.name }}</p>
+            <p><strong>Ubicación:</strong> {{ storage.location }}</p>
+            <p><strong>Capacidad Máxima:</strong> {{ storage.max_capacity }}</p>
 
-        <h2>Productos almacenados:</h2>
-        <ul>
-            {% for product in products %}
-            <li>
-                {{ product.name }} - Cantidad almacenada: {{ product.stock }}
-            </li>
-            {% endfor %}
-        </ul>
+            <h2>Productos almacenados:</h2>
+            <ul>
+                {% for product in products %}
+                <li>
+                    {{ product.name }} - Cantidad almacenada: {{ product.stock
+                    }}
+                </li>
+                {% endfor %}{% if not products %}
+                <li>No hay productos asociados</li>
+                {% endif %}
+            </ul>
 
-        <p><strong>Total Stock en la Bodega:</strong> {{ totalStock }}</p>
-        <a href="{{ url_for('readStorages') }}">Volver a Productos</a>
+            <p><strong>Total Stock en la Bodega:</strong> {{ totalStock }}</p>
+        </div>
+        <button class="return">
+            <a href="{{ url_for('readStorages') }}">Consultar otra bodega</a>
+        </button>
     </body>
 </html>
+{% endblock %}

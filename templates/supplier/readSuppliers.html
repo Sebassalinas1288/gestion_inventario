@@ -1,3 +1,4 @@
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -5,20 +6,39 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Consultar Proveedores</title>
     </head>
-    <body>
-        <h1>Consultar Proveedores</h1>
-        <a href="{{ url_for('addSupplier') }}">Añadir Proveedor</a>
-        <ul>
-            {% for supplier in suppliers %}
-            <li>
-                <a
-                    href="{{ url_for('consultarProveedor', supplier_id=supplier.id) }}"
-                    >{{ supplier.name }}</a
-                >
-                - {{ supplier.address }} - {{ supplier.cellphone }}
-            </li>
-            {% endfor %}
-        </ul>
-        <a href="{{ url_for('index') }}">Volver al menú</a>
+    <body style="display: flex; flex-direction: column; gap: 24px">
+        <div style="display: flex; flex-direction: column">
+            <h1>Consultar Proveedores</h1>
+            <button class="addButton">
+                <a href="{{ url_for('addSupplier') }}">Añadir Proveedor</a>
+            </button>
+        </div>
+
+        <div style="overflow: auto; height: 75vh">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for supplier in suppliers %}
+                    <tr>
+                        <td>
+                            <a
+                                href="{{ url_for('consultarProveedor', supplier_id=supplier.id) }}"
+                                >{{ supplier.name }}</a
+                            >
+                        </td>
+                        <td>{{ supplier.address }}</td>
+                        <td>{{ supplier.cellphone }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
+{% endblock %}

@@ -8,17 +8,21 @@
     </head>
     <body>
         <h1>Información de la Categoría</h1>
-        <p><strong>Nombre:</strong> {{ category.name }}</p>
-        <p><strong>Descripción:</strong> {{ category.description }}</p>
-        <h2>Productos asociados:</h2>
-        <ul>
-            {% for product in category.products %}
-            <li>{{ product.name }}</li>
-            {% endfor %} {% if not category.products %}
-            <li>No hay productos asociados</li>
-            {% endif %}
-        </ul>
-        <a href="{{ url_for('index') }}">Volver</a>
+        <div class="container">
+            <p><strong>Nombre:</strong> {{ category.name }}</p>
+            <p><strong>Descripción:</strong> {{ category.description }}</p>
+            <h2>Productos asociados:</h2>
+            <ul>
+                {% for product in category.products %}
+                <li>{{ product.name }}</li>
+                {% endfor %} {% if not category.products %}
+                <li>No hay productos asociados</li>
+                {% endif %}
+            </ul>
+        </div>
+        <button class="return">
+            <a href="{{ url_for('readCategories') }}">Consultar otra categoría</a>
+        </button>
     </body>
 </html>
 {% endblock %}
