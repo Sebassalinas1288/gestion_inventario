@@ -60,8 +60,6 @@ def removeProduct():
     typeButton = data.get('type')
     product_id = data.get('productId')
 
-    print("hola")
-
     product = Product.query.get_or_404(product_id)
     if typeButton == 'delete-category':
         product.category_id = 1  # Asignar la categoría "Sin categoría"
@@ -88,7 +86,7 @@ def addCategory():
         db.session.add(newCategory)
         db.session.commit()
 
-        return redirect(url_for('index'))
+        return redirect(url_for('readCategories'))
 
     return render_template('category/addCategory.html')
 
@@ -128,7 +126,7 @@ def addSupplier():
         db.session.add(newSupplier)
         db.session.commit()
 
-        return redirect(url_for('index'))
+        return redirect(url_for('readSuppliers'))
 
     return render_template('supplier/addSupplier.html')
 

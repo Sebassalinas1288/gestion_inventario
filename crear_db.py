@@ -29,7 +29,7 @@ def createSupplier():
     with app.app_context():
         sin_proveedor = Supplier.query.filter_by(name='Sin proveedor').first()
         if not sin_proveedor:
-            sin_proveedor = Supplier(name='Sin proveedor', address='', cellphone='')
+            sin_proveedor = Supplier(name='Sin proveedor', address='Sin dirección', cellphone='N/A')
             db.session.add(sin_proveedor)
             db.session.commit()
             print("Proveedor 'Sin proveedor' creado con éxito.")
