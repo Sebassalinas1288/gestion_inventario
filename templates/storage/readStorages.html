@@ -1,0 +1,44 @@
+{% extends 'layout.html' %} {% block contenido %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Consultar Bodegas</title>
+    </head>
+    <body style="display: flex; flex-direction: column; gap: 24px">
+        <div style="display: flex; flex-direction: column">
+            <h1>Consultar Bodegas</h1>
+            <button class="addButton">
+                <a href="{{ url_for('addStorage') }}">Añadir Bodega</a>
+            </button>
+        </div>
+
+        <div style="overflow: auto; height: 75vh">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Ubicación</th>
+                        <th>Capacidad Máxima</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for storage in storages %}
+                    <tr>
+                        <td>
+                            <a
+                                href="{{ url_for('readStorage', storage_id=storage.id) }}"
+                                >{{ storage.name }}</a
+                            >
+                        </td>
+                        <td>{{ storage.location }}</td>
+                        <td>{{ storage.max_capacity }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
+{% endblock %}

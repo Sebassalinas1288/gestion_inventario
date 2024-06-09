@@ -4,24 +4,29 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Asignar Producto a Categoría</title>
+        <title>Añadir Producto a Bodega</title>
     </head>
     <body>
-        <h1>Asignar Producto a Categoría</h1>
+        <h1>Añadir Producto a Bodega</h1>
         <form method="POST">
             <p>Producto Seleccionado: {{ product.name }}</p>
+
             <div>
-                <label for="category_id">Seleccionar Categoría:</label>
-                <select name="category_id" id="category_id">
-                    {% for category in categories %}
-                    <option value="{{ category.id }}">
-                        {{ category.name }}
-                    </option>
+                <label for="storage_id">Seleccionar Bodega:</label>
+                <select name="storage_id" id="storage_id">
+                    {% for storage in storages %}
+                    <option value="{{ storage.id }}">{{ storage.name }}</option>
                     {% endfor %}
                 </select>
             </div>
+            {% if error %}
+            <label for="error" id="error" name="error" style="width: 350px">
+                No hay suficiente espacio en la bodega para almacenar el
+                producto.</label
+            >
+            {% endif %}
 
-            <button type="submit" class="addButton">Asignar Categoría</button>
+            <button type="submit" class="addButton">Asignar Bodega</button>
         </form>
         <div style="padding-top: 12px">
             <button class="return">

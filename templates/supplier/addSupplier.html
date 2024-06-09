@@ -1,0 +1,35 @@
+{% extends 'layout.html' %} {% block contenido %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Añadir Proveedor</title>
+    </head>
+    <body>
+        <h1>Añadir Proveedor</h1>
+        <form action="{{ url_for('addSupplier') }}" method="POST">
+            <div>
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" name="name" required />
+            </div>
+            <div>
+                <label for="address">Dirección:</label>
+                <input type="text" id="address" name="address" required />
+            </div>
+            <div>
+                <label for="cellphone">Teléfono:</label>
+                <input type="text" id="cellphone" name="cellphone" required />
+            </div>
+            <button type="submit" class="addButton">Añadir Proveedor</button>
+        </form>
+        <div style="padding-top: 12px;">
+            <button class="return">
+                <a href="{{ url_for('readSuppliers') }}"
+                    >Consultar los Proveedores existentes</a
+                >
+            </button>
+        </div>
+    </body>
+</html>
+{% endblock %}

@@ -2,32 +2,39 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class Categoria(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False)
-    descripcion = db.Column(db.String(200), nullable=False)
-    productos = db.relationship('Producto', backref='categoria', lazy=True)
+# Tabla de asociación para la relación muchos a muchos con cantidad
+storage_product = db.Table('storage_product',
+    db.Column('storage_id', db.Integer, db.ForeignKey('storage.id'), primary_key=True),
+    db.Column('product_id', db.Integer, db.ForeignKey('product.id'), primary_key=True),
+    db.Column('amount', db.Integer, nullable=False, default=0)
+)
 
-class Proveedor(db.Model):
+class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False)
-    direccion = db.Column(db.String(200), nullable=False)
-    telefono = db.Column(db.String(50), nullable=False)
-    productos = db.relationship('Producto', backref='proveedor', lazy=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(200), nullable=False)
+    products = db.relationship('Product', backref='category', lazy=True)
 
-class Bodega(db.Model):
+class Supplier(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False)
-    ubicacion = db.Column(db.String(200), nullable=False)
-    capacidad_maxima = db.Column(db.Integer, nullable=False)
-    productos = db.relationship('Producto', backref='bodega', lazy=True)
+    name = db.Column(db.String(100), nullable=False)
+    address = db.Column(db.String(200), nullable=False)
+    cellphone = db.Column(db.String(50), nullable=False)
+    products = db.relationship('Product', backref='supplier', lazy=True)
 
-class Producto(db.Model):
+class Storage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(100), nullable=False)
-    descripcion = db.Column(db.String(200), nullable=False)
-    precio = db.Column(db.Float, nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+    location = db.Column(db.String(200), nullable=False)
+    max_capacity = db.Column(db.Integer, nullable=False)
+    products = db.relationship('Product', backref='storage', lazy=True)
+
+class Product(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(200), nullable=False)
+    price = db.Column(db.Float, nullable=False)
     stock = db.Column(db.Integer, nullable=False)
-    categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'), nullable=False)
-    proveedor_id = db.Column(db.Integer, db.ForeignKey('proveedor.id'), nullable=False)
-    bodega_id = db.Column(db.Integer, db.ForeignKey('bodega.id'), nullable=True)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
+    supplier_id = db.Column(db.Integer, db.ForeignKey('supplier.id'), nullable=False)
+    storage_id = db.Column(db.Integer, db.ForeignKey('storage.id'), nullable=True)

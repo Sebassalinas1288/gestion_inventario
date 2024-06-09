@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/estilo.css') }}"
+        />
+        <link
+            rel="shortcut icon"
+            href="{{ url_for('static', filename='favicon.ico') }}"
+        />
+    </head>
+    <body class="container">
+        <div class="layout">
+            <a href="{{ url_for('index') }}">
+                <img
+                    src="{{ url_for('static', filename='image/logo.png') }}"
+                    alt="Logo U. Libre"
+                    width="64"
+                />
+            </a>
+
+            <div class="layoutOptions">
+                <a href="{{ url_for('readProducts') }}" class="layoutOption">
+                    <object
+                        type="image/svg+xml"
+                        data="../static/icons/product.svg"
+                        class="icon"
+                    ></object
+                    ><span>Consultar Productos</span>
+                </a>
+                <a href="{{ url_for('readCategories') }}" class="layoutOption">
+                    <object
+                        type="image/svg+xml"
+                        data="../static/icons/category.svg"
+                        class="icon"
+                    ></object
+                    ><span>Consultar Categorias</span>
+                </a>
+                <a href="{{ url_for('readSuppliers') }}" class="layoutOption">
+                    <object
+                        type="image/svg+xml"
+                        data="../static/icons/supplier.svg"
+                        class="icon"
+                    ></object
+                    ><span>Consultar Proveedores</span>
+                </a>
+                <a href="{{ url_for('readStorages') }}" class="layoutOption">
+                    <object
+                        type="image/svg+xml"
+                        data="../static/icons/storage.svg"
+                        class="icon"
+                    ></object
+                    ><span>Consultar Bodegas</span>
+                </a>
+                <a
+                    href="{{ url_for('calculateStockValue') }}"
+                    class="layoutOption"
+                >
+                    <object
+                        type="image/svg+xml"
+                        data="../static/icons/valuestock.svg"
+                        class="icon"
+                    ></object
+                    ><span>Consultar Valor del Stock</span>
+                </a>
+                <a
+                    href="{{ url_for('checkProductAvailability') }}"
+                    class="layoutOption"
+                >
+                    <object
+                        type="image/svg+xml"
+                        data="../static/icons/consult.svg"
+                        class="icon"
+                    ></object
+                    ><span>Consultar Disponibilidad</span>
+                </a>
+                <a href="{{ url_for('informeStock') }}" class="layoutOption">
+                    <object
+                        type="image/svg+xml"
+                        data="../static/icons/report.svg"
+                        class="icon"
+                    ></object
+                    ><span>Generar Informe</span>
+                </a>
+            </div>
+        </div>
+        {% block contenido %}{% endblock %}
+    </body>
+</html>

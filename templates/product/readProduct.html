@@ -1,29 +1,25 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultar Productos</title>
-</head>
-<body>
-    <h1>Consultar Productos</h1>
-    <a href="{{ url_for('addProduct') }}">Añadir Producto</a>
-    <ul>
-        {% for producto in productos %}
-        <li>
-            {{ producto.nombre }} - {{ producto.descripcion }} - ${{ producto.precio }} - 
-            Stock: {{ producto.stock }} - 
-            Categoría: {{ producto.categoria.nombre if producto.categoria else 'Sin categoría' }} - 
-            Proveedor: {{ producto.proveedor.nombre }} -
-            Bodega: {{ producto.bodega.nombre if producto.bodega else 'N/A' }}
-            <a href="{{ url_for('addStock', producto_id=producto.id) }}">Agregar Stock</a>
-            <a href="{{ url_for('removeStock', producto_id=producto.id) }}">Retirar Stock</a>
-            <a href="{{ url_for('assignProductCategory', producto_id=producto.id) }}">Asignar a Categoría</a>
-            <form action="{{ url_for('removeProductCategory', producto_id=producto.id) }}" method="POST" style="display:inline;">
-                <button type="submit">Eliminar de Categoría</button>
-            </form>
-        </li>
-        {% endfor %}
-    </ul>
-</body>
+{% extends 'layout.html' %} {% block contenido %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Información del Producto</title>
+    </head>
+    <body style="display: flex; flex-direction: column; gap: 12px">
+        <h1>Información del Producto</h1>
+        <div class="container">
+            <p><strong>Nombre:</strong> {{ product.name }}</p>
+            <p><strong>Descripción:</strong> {{ product.description }}</p>
+            <p><strong>Precio:</strong> $ {{ product.price }}</p>
+            <p><strong>Stock Actual:</strong> {{ product.stock }}</p>
+            <p><strong>Categoría:</strong> {{ product.category.name }}</p>
+            <p><strong>Proveedor:</strong> {{ product.supplier.name }}</p>
+            <p><strong>Bodega:</strong> {{ product.storage.name }}</p>
+        </div>
+        <button class="return">
+            <a href="{{ url_for('readProducts') }}">Consultar otro producto</a>
+        </button>
+    </body>
 </html>
+{% endblock %}

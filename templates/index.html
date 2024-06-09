@@ -1,24 +1,46 @@
+{% extends 'layout.html' %} {% block contenido %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Inicio</title>
+        <title>Menú Principal</title>
     </head>
     <body>
-        <h1>Inicio</h1>
-        <a href="{{ url_for('addProduct') }}">Añadir Producto</a><br />
-        <a href="{{ url_for('readProducts') }}">Consultar Productos</a
-        ><br />
-        <a href="{{ url_for('addCategory') }}">Añadir Categoría</a><br />
-        <a href="{{ url_for('readCategories') }}">Consultar Categorías</a
-        ><br />
-        <a href="{{ url_for('addSupplier') }}">Añadir Proveedor</a><br />
-        <a href="{{ url_for('readSuppliers') }}"
-            >Consultar Proveedores</a
-        ><br />
-        <a href="{{ url_for('addStorage') }}">Añadir Bodega</a><br />
-        <a href="{{ url_for('readStorages') }}">Consultar Bodegas</a><br />
-        <a href="{{ url_for('calculateStockValue') }}">Calcular Valor Stock</a><br />
+        <h1>Menú Principal</h1>
+        <ul>
+            <li>
+                <a href="{{ url_for('readProducts') }}">Consultar Productos</a>
+            </li>
+            <li>
+                <a href="{{ url_for('readCategories') }}"
+                    >Consultar Categorías</a
+                >
+            </li>
+            <li>
+                <a href="{{ url_for('readSuppliers') }}"
+                    >Consultar Proveedores</a
+                >
+            </li>
+            <li>
+                <a href="{{ url_for('readStorages') }}">Consultar Bodegas</a>
+            </li>
+            <li>
+                <a href="{{ url_for('calculateStockValue') }}"
+                    >Calcular Valor Total de Stock</a
+                >
+            </li>
+            <li>
+                <a href="{{ url_for('checkProductAvailability') }}"
+                    >Consultar Disponibilidad de Producto en Bodega</a
+                >
+            </li>
+            <li>
+                <a href="{{ url_for('informeStock') }}"
+                    >Generar Informe de Stock</a
+                >
+            </li>
+        </ul>
     </body>
 </html>
+{% endblock %}

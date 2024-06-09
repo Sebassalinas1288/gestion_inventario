@@ -1,0 +1,37 @@
+{% extends 'layout.html' %} {% block contenido %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Informe de Stock</title>
+    </head>
+    <body>
+        <h1>Informe de Stock</h1>
+
+        <h2>Stock Total</h2>
+        <p>Total de stock: {{ stock_total }}</p>
+
+        <h2>Stock por Categoría</h2>
+        <ul>
+            {% for category in categories %}
+            <li>{{ category.name }}: {{ categoryStock(category) }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Stock por Proveedor</h2>
+        <ul>
+            {% for supplier in suppliers %}
+            <li>{{ supplier.name }}: {{ supplierStock(supplier) }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Stock por Bodega</h2>
+        <ul>
+            {% for storage in storages %}
+            <li>{{ storage.name }}: {{ storageStock(storage) }}</li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
+{% endblock %}
