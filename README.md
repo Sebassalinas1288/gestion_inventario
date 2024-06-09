@@ -21,7 +21,7 @@ Este es un sistema de gestión de inventarios desarrollado con Flask y SQLAlchem
 
 1. Clona el repositorio:
     - https://github.com/Sebassalinas1288/gestion_inventario.git
-    - cd inventory-management
+    - cd gestion_inventario
 
 2. Crear un entorno virtual (opcional)
     - python -m venv venv
