@@ -73,7 +73,6 @@ def removeProduct():
     return jsonify({"success": True, "message": "Producto actualizado correctamente"})
 
 
-
 ## -------- CATEGORY --------
 
 @app.route('/add-categoria', methods=['GET', 'POST'])
@@ -155,6 +154,7 @@ def assignProductSupplier(product_id):
 
 
 ## -------- STORAGE ---------
+
 @app.route('/add-bodega', methods=['GET', 'POST'])
 def addStorage():
     if request.method == 'POST':
@@ -222,6 +222,7 @@ def checkProductAvailability():
     storages = Storage.query.all()
     return render_template('storage/checkAvailabilityForm.html', products=products, storages=storages)
 
+
 ## -------- STOCK --------
 
 @app.route('/add-stock/<int:product_id>', methods=['GET', 'POST'])
@@ -261,6 +262,8 @@ def calculateStockValue():
     
     return render_template('stock/calculateStockValue.html', total_stock_value=total_stock_value, totalStock=totalStock, product_stock_details=product_stock_details)
 
+
+## -------- REPORTS --------
 
 @app.route('/informe-stock')
 def informeStock():

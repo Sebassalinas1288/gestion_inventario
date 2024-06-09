@@ -1,129 +1,160 @@
 from app import app
-from models import db, Category, Product, Supplier, Storage
+from models import db, Product, Category, Supplier, Storage
 
-# Configurar la ruta de la base de datos
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parcial.sqlite3'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-def poblar_db():
+def crear_datos_ejemplo():
     with app.app_context():
         # Crear categorías
-        category1 = Category(name="Electrónica", description="Dispositivos electrónicos")
-        category2 = Category(name="Ropa", description="Vestimenta y accesorios")
-        db.session.add(category1)
-        db.session.add(category2)
+        cat1 = Category(name="Electrónica", description="Dispositivos y gadgets electrónicos")
+        cat2 = Category(name="Muebles", description="Muebles para el hogar y la oficina")
+        cat3 = Category(name="Ropa", description="Ropa y accesorios")
+
+        db.session.add_all([cat1, cat2, cat3])
+        db.session.commit()
 
         # Crear proveedores
-        proveedor1 = Supplier(name="Proveedor A", address="Calle 123", cellphone="555-1234")
-        proveedor2 = Supplier(name="Proveedor B", address="Avenida 456", cellphone="555-5678")
-        db.session.add(proveedor1)
-        db.session.add(proveedor2)
+        prov1 = Supplier(name="Proveedor Uno", address="Calle Proveedor 123", cellphone="1234567890")
+        prov2 = Supplier(name="Proveedor Dos", address="Avenida Proveedor 456", cellphone="2345678901")
+        prov3 = Supplier(name="Proveedor Tres", address="Boulevard Proveedor 789", cellphone="3456789012")
+
+        db.session.add_all([prov1, prov2, prov3])
+        db.session.commit()
 
         # Crear bodegas
-        bodega1 = Storage(name="Bodega Central", location="Zona Industrial", max_capacity=1000)
-        bodega2 = Storage(name="Bodega Secundaria", location="Parque Empresarial", max_capacity=500)
-        db.session.add(bodega1)
-        db.session.add(bodega2)
+        bod1 = Storage(name="Bodega Principal", location="Ciudad Central", max_capacity=1000)
+        bod2 = Storage(name="Bodega Secundaria", location="Lado Este", max_capacity=800)
+        bod3 = Storage(name="Bodega de Reserva", location="Lado Oeste", max_capacity=600)
+
+        db.session.add_all([bod1, bod2, bod3])
+        db.session.commit()
 
         # Crear productos
         products = [
             Product(
-                name="Laptop",
-                description="Laptop de alta gama",
-                price=1200.00,
-                stock=50,
-                category=category1,
-                supplier=proveedor1,
-                storage=bodega1
-            ),
+                name="Portátil", 
+                description="Portátil de alto rendimiento", 
+                price=1200.00, 
+                stock=50, 
+                category=cat1, 
+                supplier=prov1, 
+                storage=bod1),
             Product(
-                name="Camiseta",
-                description="Camiseta de algodón",
-                price=20.00,
-                stock=200,
-                category=category2,
-                supplier=proveedor2,
-                storage=bodega2
-            ),
+                name="Teléfono Inteligente", 
+                description="Último modelo de teléfono inteligente",
+                price=800.00, 
+                stock=100, 
+                category=cat1, 
+                supplier=prov2, 
+                storage=bod1),
             Product(
-                name="Smartphone",
-                description="Teléfono inteligente",
-                price=800.00,
-                stock=100,
-                category=category1,
-                supplier=proveedor1,
-                storage=bodega1
-            ),
+                name="Tableta", 
+                description="Tableta de 10 pulgadas", 
+                price=300.00, 
+                stock=70, 
+                category=cat1, 
+                supplier=prov3, 
+                storage=bod1),
             Product(
-                name="Pantalones",
-                description="Pantalones de mezclilla",
-                price=40.00,
-                stock=100,
-                category=category2,
-                supplier=proveedor2,
-                storage=bodega2
-            ),
+                name="Silla de Oficina", 
+                description="Silla ergonómica de oficina", 
+                price=150.00, 
+                stock=20, 
+                category=cat2, 
+                supplier=prov1, 
+                storage=bod2),
             Product(
-                name="Tablet",
-                description="Tablet de 10 pulgadas",
-                price=300.00,
-                stock=70,
-                category=category1,
-                supplier=proveedor1,
-                storage=bodega1
-            ),
+                name="Escritorio", 
+                description="Escritorio de madera para oficina", 
+                price=200.00, 
+                stock=15, 
+                category=cat2, 
+                supplier=prov2, 
+                storage=bod2),
             Product(
-                name="Chaqueta",
-                description="Chaqueta de cuero",
-                price=150.00,
-                stock=80,
-                category=category2,
-                supplier=proveedor2,
-                storage=bodega2
-            ),
+                name="Estante", 
+                description="Estante de 5 niveles", 
+                price=100.00, stock=30, 
+                category=cat2, 
+                supplier=prov3, 
+                storage=bod2),
             Product(
-                name="Monitor",
-                description="Monitor 4K",
-                price=400.00,
-                stock=60,
-                category=category1,
-                supplier=proveedor1,
-                storage=bodega1
-            ),
+                name="Camiseta", 
+                description="Camiseta de algodón", 
+                price=20.00, 
+                stock=200, 
+                category=cat3, 
+                supplier=prov1, 
+                storage=bod3),
             Product(
-                name="Zapatos",
-                description="Zapatos deportivos",
-                price=60.00,
-                stock=120,
-                category=category2,
-                supplier=proveedor2,
-                storage=bodega2
-            ),
+                name="Jeans", 
+                description="Jeans de mezclilla", 
+                price=50.00, 
+                stock=150, 
+                category=cat3, 
+                supplier=prov2, 
+                storage=bod3),
             Product(
-                name="Auriculares",
-                description="Auriculares inalámbricos",
-                price=100.00,
-                stock=90,
-                category=category1,
-                supplier=proveedor1,
-                storage=bodega1
-            ),
+                name="Chaqueta", 
+                description="Chaqueta de cuero", 
+                price=120.00, 
+                stock=80, 
+                category=cat3, 
+                supplier=prov3, 
+                storage=bod3),
             Product(
-                name="Reloj",
-                description="Reloj de pulsera",
-                price=200.00,
-                stock=75,
-                category=category1,
-                supplier=proveedor1,
-                storage=bodega1
-            )
+                name="Auriculares", 
+                description="Auriculares inalámbricos", 
+                price=100.00, 
+                stock=90, 
+                category=cat1, 
+                supplier=prov1, 
+                storage=bod1),
+            Product(
+                name="Monitor", 
+                description="Monitor de 24 pulgadas", 
+                price=200.00, 
+                stock=60, 
+                category=cat1, 
+                supplier=prov2, 
+                storage=bod1),
+            Product(
+                name="Teclado", 
+                description="Teclado mecánico", 
+                price=80.00, 
+                stock=110, 
+                category=cat1, 
+                supplier=prov3, 
+                storage=bod1),
+            Product(
+                name="Mesa de Comedor", 
+                description="Mesa de comedor para 6 personas", 
+                price=400.00, 
+                stock=10, 
+                category=cat2, 
+                supplier=prov1, 
+                storage=bod2),
+            Product(
+                name="Sofá", 
+                description="Sofá de 3 plazas", 
+                price=500.00, 
+                stock=8, 
+                category=cat2, 
+                supplier=prov2, 
+                storage=bod2),
+            Product(
+                name="Cama", 
+                description="Cama tamaño queen", 
+                price=700.00, 
+                stock=12, 
+                category=cat2, 
+                supplier=prov3, 
+                storage=bod2)
         ]
+
         for product in products:
             db.session.add(product)
-
-        # Guardar cambios en la base de datos
         db.session.commit()
-        print("Base de datos poblada con éxito.")
 
-if __name__ == '__main__':
-    poblar_db()
+        print("Datos de ejemplo creadas exitosamente.")
+
+if __name__ == "__main__":
+    crear_datos_ejemplo()
